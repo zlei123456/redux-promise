@@ -39,6 +39,28 @@ createAction('FETCH_THING', async id => {
   const result = await somePromise;
   return result.someValue;
 });
+
+or 
+createAction('FETCH_THING', async id => {
+  const result = await somePromise;
+  return (dispatch, getState) => {
+    dispatch(someData);
+    dispatch(someData2);
+
+    return result.someValue;
+  };
+});
+
+or 
+createAction('FETCH_THING', id => {
+  return (dispatch, getState) => {
+    dispatch(someData);
+    dispatch(someData2);
+
+    return result.someValue;
+  };
+});
+
 ```
 
 Unlike Flummox, it will not perform a dispatch at the beginning of the operation, only at the end. We're still looking into the [best way to deal with optimistic updates](https://github.com/redux-utilities/flux-standard-action/issues/7). If you have a suggestion, let me know.
